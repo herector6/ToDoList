@@ -1,0 +1,89 @@
+﻿@model TaskDetailsViewModel
+@using ToDoList.DataAccess.Models;
+
+@{
+    ViewData["Title"] = "Task Details | TaskDetails";
+}
+<style>
+    body{
+        background-color: #DFEBD8;
+    }
+</style>
+
+<script type="text/javascript">
+
+        function confirmDelete(id) {
+            $("#hdnDeleteTaskID").val(id);
+            $("#deleteModal").modal("show");
+        }
+
+        function cancelDelete() {
+            $("#hdnDeleteTaskID").val(0);
+            $("#deleteModal").modal("hide");
+        }
+
+        function deleteAccount() {
+            var id = $("#hdnDeleteTaskID").val();
+            window.location.href = "/TaskDetails/Delete/" + id;
+        }
+</script>
+
+<input type="hidden" id="hdnDeleteTaskID" value="0" />
+
+<div class="text-center">
+    @*@if (!String.IsNullOrEmpty(Model.ActionMessage))
+    {
+        string colorClass = Model.IsActionSuccess ? "alert-success" : "alert-danger";
+
+        <div class="alert @colorClass alert-dismissible fade show" role="alert">
+            <strong>@Model.ActionMessage</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }*@
+
+    <h1 class="display-4">Task Name</h1>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <table class="table">
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Inserted Date</th>
+                    <th>Expected Time</th>
+                    <th>Day Of Week</th>
+                    <th colspan="2"><a type="button" href="~/TaskDetails/Update/0" class="btn btn-success btn-sm">ADD NEW TASK DETAIL</a></th>
+                </tr>
+
+                @foreach (TaskDetailsModel task in Model.TaskDetailsList)
+                {
+                    <tr>
+                        <td>@task.TaskName</td>
+                        <td>@task.Description</td>
+                        <td>@task.InsertedDate</td>
+                        <td>@task.ExpectedTime</td>
+                        <td>@task.DayOfWeek</td>
+                        <td><a type="button" href="~/TaskDetails/Update/@task.TaskID" class="btn btn-secondary btn-sm">EDIT</a></td>
+                        <td><button type="button" onclick="confirmDelete(@task.TaskID)" class="btn btn-danger btn-sm">DELETE</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">CONFIRM DELETE</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this task?</p>
+                <button type="button" onclick="javascript:cancelDelete()" class="btn btn-secondary btn-sm">CANCEL</button>
+                <button type="button" onclick="javascript:deleteAccount()" class="btn btn-danger btn-sm">DELETE</button>
+            </div>
+        </div>
+    </div>
+</div>

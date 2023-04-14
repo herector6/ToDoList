@@ -1,0 +1,51 @@
+﻿@model TaskDetailsViewModel
+
+@{
+    string pageType = Model.CurrentTaskDetail.TaskID > 0 ? "Update Task Detail" : "Create Task Detail";
+
+    ViewData["Title"] = $"ToDoList | {pageType}";
+}
+
+<form action="~/TaskDetails/Index" method="post">
+    <div>
+        <div class="row">
+            <div class="col-6 offset-3 text-center">
+                <h1 class="display-4" style="margin: 20px 0px;">@pageType</h1>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 offset-md-3 form-group">
+                <label>Task Name: </label>
+                <input type="text" class="form-control" required name="taskName" value="@Model.CurrentTaskDetail.TaskName" />
+            </div>
+            <div class="col-md-3 offset-md-3 form-group">
+                <label>Description: </label>
+                <input type="text" class="form-control" required name="description" value="@Model.CurrentTaskDetail.Description" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 offset-md-3 form-group">
+                <label>Inserted Date: </label>
+                <input type="datetime" class="form-control" required name="insertedDate" value="@Model.CurrentTaskDetail.InsertedDate" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 offset-md-3 form-group">
+                <label>Expected Time: </label>
+                <input type="number" class="form-control" required name="expectedTime" value="@Model.CurrentTaskDetail.ExpectedTime" />
+            </div>
+        </div><div class="form-row">
+            <div class="col-md-6 offset-md-3 form-group">
+                <label>Day of Week: </label>
+                <input type="text" class="form-control" required name="dayOfWeek" value="@Model.CurrentTaskDetail.DayOfWeek" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 offset-md-3">
+                <button type="button" class="btn btn-secondary" onclick="location.href = '/TaskDetails/Index'">CANCEL</button>
+                <button type="submit" class="btn btn-primary">SAVE TASK DETAIL</button>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="TaskID" value="@Model.CurrentTaskDetail.TaskID" />
+    </form>
